@@ -1,5 +1,6 @@
 import {TaskQueue} from 'aurelia-task-queue';
 import {getArrayObserver} from './array-observation';
+import {getMapObserver} from './map-observation';
 import {EventManager} from './event-manager';
 import {DirtyChecker, DirtyCheckProperty} from './dirty-checking';
 import {
@@ -69,8 +70,8 @@ function createObserversLookup(obj) {
   return value;
 }
 
-function createObserverLookup(obj) {
-  var value = new OoObjectObserver(obj);
+function createObserverLookup(obj, observerLocator) {
+  var value = new OoObjectObserver(obj, observerLocator);
 
   try{
     Object.defineProperty(obj, "__observer__", {
@@ -140,12 +141,15 @@ export class ObserverLocator {
     }
 
     if(hasObjectObserve){
-      observerLookup = obj.__observer__ || createObserverLookup(obj);
-      return observerLookup.getObserver(propertyName);
+      observerLookup = obj.__observer__ || createObserverLookup(obj, this);
+      return observerLookup.getObserver(propertyName, descriptor);
     }
 
     if(obj instanceof Array){
       observerLookup = this.getArrayObserver(obj);
+      return observerLookup.getObserver(propertyName);
+    }else if(obj instanceof Map){
+      observerLookup = this.getMapObserver(obj);
       return observerLookup.getObserver(propertyName);
     }
 
@@ -158,6 +162,14 @@ export class ObserverLocator {
     }
 
     return array.__array_observer__ = getArrayObserver(this.taskQueue, array);
+  }
+
+  getMapObserver(map){
+    if('__map_observer__' in map){
+      return map.__map_observer__;
+    }
+
+    return map.__map_observer__ = getMapObserver(this.taskQueue, map);
   }
 }
 

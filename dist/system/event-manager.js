@@ -1,14 +1,18 @@
 System.register([], function (_export) {
   "use strict";
 
-  var _prototypeProperties, DefaultEventStrategy, EventManager;
+  var _prototypeProperties, _classCallCheck, DefaultEventStrategy, EventManager;
   return {
     setters: [],
     execute: function () {
       _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
       DefaultEventStrategy = (function () {
         function DefaultEventStrategy() {
+          _classCallCheck(this, DefaultEventStrategy);
+
           this.delegatedEvents = {};
         }
 
@@ -106,6 +110,8 @@ System.register([], function (_export) {
       })();
       EventManager = _export("EventManager", (function () {
         function EventManager() {
+          _classCallCheck(this, EventManager);
+
           this.elementHandlerLookup = {};
           this.eventStrategyLookup = {};
 

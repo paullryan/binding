@@ -3,8 +3,12 @@ define(["exports"], function (exports) {
 
   var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
   var DefaultEventStrategy = (function () {
     function DefaultEventStrategy() {
+      _classCallCheck(this, DefaultEventStrategy);
+
       this.delegatedEvents = {};
     }
 
@@ -103,6 +107,8 @@ define(["exports"], function (exports) {
 
   var EventManager = exports.EventManager = (function () {
     function EventManager() {
+      _classCallCheck(this, EventManager);
+
       this.elementHandlerLookup = {};
       this.eventStrategyLookup = {};
 
@@ -195,5 +201,7 @@ define(["exports"], function (exports) {
 
     return EventManager;
   })();
-  exports.__esModule = true;
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
 });

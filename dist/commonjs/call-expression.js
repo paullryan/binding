@@ -2,8 +2,12 @@
 
 var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
 var CallExpression = exports.CallExpression = (function () {
   function CallExpression(observerLocator, targetProperty, sourceExpression, valueConverterLookupFunction) {
+    _classCallCheck(this, CallExpression);
+
     this.observerLocator = observerLocator;
     this.targetProperty = targetProperty;
     this.sourceExpression = sourceExpression;
@@ -24,6 +28,8 @@ var CallExpression = exports.CallExpression = (function () {
 })();
 var Call = (function () {
   function Call(observerLocator, sourceExpression, target, targetProperty, valueConverterLookupFunction) {
+    _classCallCheck(this, Call);
+
     this.sourceExpression = sourceExpression;
     this.target = target;
     this.targetProperty = observerLocator.getObserver(target, targetProperty);
@@ -66,4 +72,6 @@ var Call = (function () {
   return Call;
 })();
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});

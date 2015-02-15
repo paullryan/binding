@@ -1,14 +1,18 @@
 System.register([], function (_export) {
   "use strict";
 
-  var _prototypeProperties, CallExpression, Call;
+  var _prototypeProperties, _classCallCheck, CallExpression, Call;
   return {
     setters: [],
     execute: function () {
       _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
       CallExpression = _export("CallExpression", (function () {
         function CallExpression(observerLocator, targetProperty, sourceExpression, valueConverterLookupFunction) {
+          _classCallCheck(this, CallExpression);
+
           this.observerLocator = observerLocator;
           this.targetProperty = targetProperty;
           this.sourceExpression = sourceExpression;
@@ -29,6 +33,8 @@ System.register([], function (_export) {
       })());
       Call = (function () {
         function Call(observerLocator, sourceExpression, target, targetProperty, valueConverterLookupFunction) {
+          _classCallCheck(this, Call);
+
           this.sourceExpression = sourceExpression;
           this.target = target;
           this.targetProperty = observerLocator.getObserver(target, targetProperty);

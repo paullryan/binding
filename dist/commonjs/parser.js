@@ -2,6 +2,8 @@
 
 var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
 var _lexer = require("./lexer");
 
 var Lexer = _lexer.Lexer;
@@ -32,6 +34,8 @@ var EOF = new Token(-1, null);
 
 var Parser = exports.Parser = (function () {
   function Parser() {
+    _classCallCheck(this, Parser);
+
     this.cache = {};
     this.lexer = new Lexer();
   }
@@ -52,6 +56,8 @@ var Parser = exports.Parser = (function () {
 })();
 var ParserImplementation = exports.ParserImplementation = (function () {
   function ParserImplementation(lexer, input) {
+    _classCallCheck(this, ParserImplementation);
+
     this.index = 0;
     this.input = input;
     this.tokens = lexer.lex(input);
@@ -449,4 +455,6 @@ var ParserImplementation = exports.ParserImplementation = (function () {
 
   return ParserImplementation;
 })();
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});

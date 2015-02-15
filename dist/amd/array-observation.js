@@ -3,6 +3,8 @@ define(["exports", "./array-change-records"], function (exports, _arrayChangeRec
 
   var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
   exports.getArrayObserver = getArrayObserver;
   var calcSplices = _arrayChangeRecords.calcSplices;
   var projectArraySplices = _arrayChangeRecords.projectArraySplices;
@@ -26,9 +28,9 @@ define(["exports", "./array-change-records"], function (exports, _arrayChangeRec
     arr.length = 0;
 
     Object.deliverChangeRecords(callback);
-    if (records.length !== 2) return false;
-
-    if (records[0].type != "splice" || records[1].type != "splice") {
+    if (records.length !== 2) {
+      return false;
+    }if (records[0].type != "splice" || records[1].type != "splice") {
       return false;
     }
 
@@ -47,6 +49,8 @@ define(["exports", "./array-change-records"], function (exports, _arrayChangeRec
 
   var ModifyArrayObserver = (function () {
     function ModifyArrayObserver(taskQueue, array) {
+      _classCallCheck(this, ModifyArrayObserver);
+
       this.taskQueue = taskQueue;
       this.callbacks = [];
       this.changeRecords = [];
@@ -230,6 +234,8 @@ define(["exports", "./array-change-records"], function (exports, _arrayChangeRec
 
   var ArrayObserveObserver = (function () {
     function ArrayObserveObserver(array) {
+      _classCallCheck(this, ArrayObserveObserver);
+
       this.array = array;
       this.callbacks = [];
       this.observing = false;
@@ -298,6 +304,8 @@ define(["exports", "./array-change-records"], function (exports, _arrayChangeRec
 
   var ArrayLengthObserver = (function () {
     function ArrayLengthObserver(array) {
+      _classCallCheck(this, ArrayLengthObserver);
+
       this.array = array;
       this.callbacks = [];
       this.currentValue = array.length;
@@ -349,5 +357,7 @@ define(["exports", "./array-change-records"], function (exports, _arrayChangeRec
     return ArrayLengthObserver;
   })();
 
-  exports.__esModule = true;
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
 });

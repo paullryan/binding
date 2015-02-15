@@ -29,14 +29,24 @@ System.register([], function (_export) {
   }
 
   function intersect(start1, end1, start2, end2) {
-    if (end1 < start2 || end2 < start1) return -1;
-
-    if (end1 == start2 || end2 == start1) return 0;
-
+    if (end1 < start2 || end2 < start1) {
+      return -1;
+    }
+    if (end1 == start2 || end2 == start1) {
+      return 0;
+    }
     if (start1 < start2) {
-      if (end1 < end2) return end1 - start2;else return end2 - start2;
+      if (end1 < end2) {
+        return end1 - start2;
+      } else {
+        return end2 - start2;
+      }
     } else {
-      if (end2 < end1) return end2 - start1;else return end1 - start1;
+      if (end2 < end1) {
+        return end2 - start1;
+      } else {
+        return end1 - start1;
+      }
     }
   }
 
@@ -114,7 +124,7 @@ System.register([], function (_export) {
           if (!isIndex(record.name)) continue;
           var index = toNumber(record.name);
           if (index < 0) continue;
-          mergeSplice(splices, index, [record.oldValue], 1);
+          mergeSplice(splices, index, [record.oldValue], 0);
           break;
         default:
           console.error("Unexpected record type: " + JSON.stringify(record));

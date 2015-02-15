@@ -1,10 +1,13 @@
-define(["exports", "aurelia-task-queue", "./array-observation", "./event-manager", "./dirty-checking", "./property-observation", "aurelia-dependency-injection"], function (exports, _aureliaTaskQueue, _arrayObservation, _eventManager, _dirtyChecking, _propertyObservation, _aureliaDependencyInjection) {
+define(["exports", "aurelia-task-queue", "./array-observation", "./map-observation", "./event-manager", "./dirty-checking", "./property-observation", "aurelia-dependency-injection"], function (exports, _aureliaTaskQueue, _arrayObservation, _mapObservation, _eventManager, _dirtyChecking, _propertyObservation, _aureliaDependencyInjection) {
   "use strict";
 
   var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+  var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
   var TaskQueue = _aureliaTaskQueue.TaskQueue;
   var getArrayObserver = _arrayObservation.getArrayObserver;
+  var getMapObserver = _mapObservation.getMapObserver;
   var EventManager = _eventManager.EventManager;
   var DirtyChecker = _dirtyChecking.DirtyChecker;
   var DirtyCheckProperty = _dirtyChecking.DirtyCheckProperty;
@@ -45,9 +48,9 @@ define(["exports", "aurelia-task-queue", "./array-observation", "./event-manager
     delete test.id;
 
     Object.deliverChangeRecords(callback);
-    if (records.length !== 3) return false;
-
-    if (records[0].type != "add" || records[1].type != "update" || records[2].type != "delete") {
+    if (records.length !== 3) {
+      return false;
+    }if (records[0].type != "add" || records[1].type != "update" || records[2].type != "delete") {
       return false;
     }
 
@@ -71,8 +74,8 @@ define(["exports", "aurelia-task-queue", "./array-observation", "./event-manager
     return value;
   }
 
-  function createObserverLookup(obj) {
-    var value = new OoObjectObserver(obj);
+  function createObserverLookup(obj, observerLocator) {
+    var value = new OoObjectObserver(obj, observerLocator);
 
     try {
       Object.defineProperty(obj, "__observer__", {
@@ -88,6 +91,8 @@ define(["exports", "aurelia-task-queue", "./array-observation", "./event-manager
 
   var ObserverLocator = exports.ObserverLocator = (function () {
     function ObserverLocator(taskQueue, eventManager, dirtyChecker, observationAdapters) {
+      _classCallCheck(this, ObserverLocator);
+
       this.taskQueue = taskQueue;
       this.eventManager = eventManager;
       this.dirtyChecker = dirtyChecker;
@@ -128,7 +133,9 @@ define(["exports", "aurelia-task-queue", "./array-observation", "./event-manager
           var i, ii, observationAdapter;
           for (i = 0, ii = this.observationAdapters.length; i < ii; i++) {
             observationAdapter = this.observationAdapters[i];
-            if (observationAdapter.handlesProperty(obj, propertyName)) return observationAdapter;
+            if (observationAdapter.handlesProperty(obj, propertyName)) {
+              return observationAdapter;
+            }
           }
           return null;
         },
@@ -149,17 +156,21 @@ define(["exports", "aurelia-task-queue", "./array-observation", "./event-manager
           descriptor = Object.getPropertyDescriptor(obj, propertyName);
           if (descriptor && (descriptor.get || descriptor.set)) {
             observationAdapter = this.getObservationAdapter(obj, propertyName);
-            if (observationAdapter) return observationAdapter.getObserver(obj, propertyName);
-            return new DirtyCheckProperty(this.dirtyChecker, obj, propertyName);
+            if (observationAdapter) {
+              return observationAdapter.getObserver(obj, propertyName);
+            }return new DirtyCheckProperty(this.dirtyChecker, obj, propertyName);
           }
 
           if (hasObjectObserve) {
-            observerLookup = obj.__observer__ || createObserverLookup(obj);
-            return observerLookup.getObserver(propertyName);
+            observerLookup = obj.__observer__ || createObserverLookup(obj, this);
+            return observerLookup.getObserver(propertyName, descriptor);
           }
 
           if (obj instanceof Array) {
             observerLookup = this.getArrayObserver(obj);
+            return observerLookup.getObserver(propertyName);
+          } else if (obj instanceof Map) {
+            observerLookup = this.getMapObserver(obj);
             return observerLookup.getObserver(propertyName);
           }
 
@@ -188,13 +199,36 @@ define(["exports", "aurelia-task-queue", "./array-observation", "./event-manager
         }),
         writable: true,
         configurable: true
+      },
+      getMapObserver: {
+        value: (function (_getMapObserver) {
+          var _getMapObserverWrapper = function getMapObserver() {
+            return _getMapObserver.apply(this, arguments);
+          };
+
+          _getMapObserverWrapper.toString = function () {
+            return _getMapObserver.toString();
+          };
+
+          return _getMapObserverWrapper;
+        })(function (map) {
+          if ("__map_observer__" in map) {
+            return map.__map_observer__;
+          }
+
+          return map.__map_observer__ = getMapObserver(this.taskQueue, map);
+        }),
+        writable: true,
+        configurable: true
       }
     });
 
     return ObserverLocator;
   })();
   var ObjectObservationAdapter = exports.ObjectObservationAdapter = (function () {
-    function ObjectObservationAdapter() {}
+    function ObjectObservationAdapter() {
+      _classCallCheck(this, ObjectObservationAdapter);
+    }
 
     _prototypeProperties(ObjectObservationAdapter, null, {
       handlesProperty: {
@@ -215,5 +249,7 @@ define(["exports", "aurelia-task-queue", "./array-observation", "./event-manager
 
     return ObjectObservationAdapter;
   })();
-  exports.__esModule = true;
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
 });

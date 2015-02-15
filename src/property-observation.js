@@ -1,3 +1,11 @@
+
+function getAttrNamespace(attributes, propertyName){
+  let attr = attributes.getNamedItem(propertyName);
+  if(attr){
+    return attr.namespaceURI;
+  }
+}
+
 export class SetterObserver {
   constructor(taskQueue, obj, propertyName){
     this.taskQueue = taskQueue;
@@ -14,9 +22,12 @@ export class SetterObserver {
   }
 
   setValue(newValue){
-    if(this.isSVG){
+    if(this.propertyName.indexOf(':') > 0) {
+      var namespaceURI = getAttrNamespace(this.obj.attributes, this.propertyName);
+      this.obj.setAttributeNS(namespaceURI, this.propertyName, newValue);
+    } else if (this.isSVG) {
       this.obj.setAttributeNS(null, this.propertyName, newValue);
-    }else{
+    } else {
       this.obj[this.propertyName] = newValue;
     }
   }
@@ -151,9 +162,12 @@ export class OoPropertyObserver {
   }
 
   setValue(newValue){
-    if(this.isSVG){
+    if(this.propertyName.indexOf(':') > 0) {
+      var namespaceURI = getAttrNamespace(this.obj.attributes, this.propertyName);
+      this.obj.setAttributeNS(namespaceURI, this.propertyName, newValue);
+    } else if (this.isSVG) {
       this.obj.setAttributeNS(null, this.propertyName, newValue);
-    }else{
+    } else {
       this.obj[this.propertyName] = newValue;
     }
   }
@@ -197,9 +211,12 @@ export class UndefinedPropertyObserver {
       return;
     }
     // define the property and trigger the callbacks.
-    if(this.isSVG){
+    if(this.propertyName.indexOf(':') > 0) {
+      var namespaceURI = getAttrNamespace(this.obj.attributes, this.propertyName);
+      this.obj.setAttributeNS(namespaceURI, this.propertyName, newValue);
+    } else if (this.isSVG) {
       this.obj.setAttributeNS(null, this.propertyName, newValue);
-    }else{
+    } else {
       this.obj[this.propertyName] = newValue;
     }
     this.trigger(newValue, undefined);

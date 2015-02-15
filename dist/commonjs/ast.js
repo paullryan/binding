@@ -6,10 +6,14 @@ var _inherits = function (subClass, superClass) { if (typeof superClass !== "fun
 
 var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
 var PathObserver = require("./path-observer").PathObserver;
 var CompositeObserver = require("./composite-observer").CompositeObserver;
 var Expression = exports.Expression = (function () {
   function Expression() {
+    _classCallCheck(this, Expression);
+
     this.isChain = false;
     this.isAssignable = false;
   }
@@ -42,6 +46,8 @@ var Expression = exports.Expression = (function () {
 })();
 var Chain = exports.Chain = (function (Expression) {
   function Chain(expressions) {
+    _classCallCheck(this, Chain);
+
     _get(Object.getPrototypeOf(Chain.prototype), "constructor", this).call(this);
 
     this.expressions = expressions;
@@ -85,6 +91,8 @@ var Chain = exports.Chain = (function (Expression) {
 })(Expression);
 var ValueConverter = exports.ValueConverter = (function (Expression) {
   function ValueConverter(expression, name, args, allArgs) {
+    _classCallCheck(this, ValueConverter);
+
     _get(Object.getPrototypeOf(ValueConverter.prototype), "constructor", this).call(this);
 
     this.expression = expression;
@@ -174,6 +182,8 @@ var ValueConverter = exports.ValueConverter = (function (Expression) {
 })(Expression);
 var Assign = exports.Assign = (function (Expression) {
   function Assign(target, value) {
+    _classCallCheck(this, Assign);
+
     _get(Object.getPrototypeOf(Assign.prototype), "constructor", this).call(this);
 
     this.target = target;
@@ -210,6 +220,8 @@ var Assign = exports.Assign = (function (Expression) {
 })(Expression);
 var Conditional = exports.Conditional = (function (Expression) {
   function Conditional(condition, yes, no) {
+    _classCallCheck(this, Conditional);
+
     _get(Object.getPrototypeOf(Conditional.prototype), "constructor", this).call(this);
 
     this.condition = condition;
@@ -275,6 +287,8 @@ var Conditional = exports.Conditional = (function (Expression) {
 })(Expression);
 var AccessScope = exports.AccessScope = (function (Expression) {
   function AccessScope(name) {
+    _classCallCheck(this, AccessScope);
+
     _get(Object.getPrototypeOf(AccessScope.prototype), "constructor", this).call(this);
 
     this.name = name;
@@ -323,6 +337,8 @@ var AccessScope = exports.AccessScope = (function (Expression) {
 })(Expression);
 var AccessMember = exports.AccessMember = (function (Expression) {
   function AccessMember(object, name) {
+    _classCallCheck(this, AccessMember);
+
     _get(Object.getPrototypeOf(AccessMember.prototype), "constructor", this).call(this);
 
     this.object = object;
@@ -396,6 +412,8 @@ var AccessMember = exports.AccessMember = (function (Expression) {
 })(Expression);
 var AccessKeyed = exports.AccessKeyed = (function (Expression) {
   function AccessKeyed(object, key) {
+    _classCallCheck(this, AccessKeyed);
+
     _get(Object.getPrototypeOf(AccessKeyed.prototype), "constructor", this).call(this);
 
     this.object = object;
@@ -467,6 +485,8 @@ var AccessKeyed = exports.AccessKeyed = (function (Expression) {
 })(Expression);
 var CallScope = exports.CallScope = (function (Expression) {
   function CallScope(name, args) {
+    _classCallCheck(this, CallScope);
+
     _get(Object.getPrototypeOf(CallScope.prototype), "constructor", this).call(this);
 
     this.name = name;
@@ -530,6 +550,8 @@ var CallScope = exports.CallScope = (function (Expression) {
 })(Expression);
 var CallMember = exports.CallMember = (function (Expression) {
   function CallMember(object, name, args) {
+    _classCallCheck(this, CallMember);
+
     _get(Object.getPrototypeOf(CallMember.prototype), "constructor", this).call(this);
 
     this.object = object;
@@ -600,6 +622,8 @@ var CallMember = exports.CallMember = (function (Expression) {
 })(Expression);
 var CallFunction = exports.CallFunction = (function (Expression) {
   function CallFunction(func, args) {
+    _classCallCheck(this, CallFunction);
+
     _get(Object.getPrototypeOf(CallFunction.prototype), "constructor", this).call(this);
 
     this.func = func;
@@ -673,6 +697,8 @@ var CallFunction = exports.CallFunction = (function (Expression) {
 })(Expression);
 var Binary = exports.Binary = (function (Expression) {
   function Binary(operation, left, right) {
+    _classCallCheck(this, Binary);
+
     _get(Object.getPrototypeOf(Binary.prototype), "constructor", this).call(this);
 
     this.operation = operation;
@@ -710,13 +736,17 @@ var Binary = exports.Binary = (function (Expression) {
         if (left === null || right === null) {
           switch (this.operation) {
             case "+":
-              if (left != null) return left;
-              if (right != null) return right;
-              return 0;
+              if (left != null) {
+                return left;
+              }if (right != null) {
+                return right;
+              }return 0;
             case "-":
-              if (left != null) return left;
-              if (right != null) return 0 - right;
-              return 0;
+              if (left != null) {
+                return left;
+              }if (right != null) {
+                return 0 - right;
+              }return 0;
           }
 
           return null;
@@ -795,6 +825,8 @@ var Binary = exports.Binary = (function (Expression) {
 })(Expression);
 var PrefixNot = exports.PrefixNot = (function (Expression) {
   function PrefixNot(operation, expression) {
+    _classCallCheck(this, PrefixNot);
+
     _get(Object.getPrototypeOf(PrefixNot.prototype), "constructor", this).call(this);
 
     this.operation = operation;
@@ -844,6 +876,8 @@ var PrefixNot = exports.PrefixNot = (function (Expression) {
 })(Expression);
 var LiteralPrimitive = exports.LiteralPrimitive = (function (Expression) {
   function LiteralPrimitive(value) {
+    _classCallCheck(this, LiteralPrimitive);
+
     _get(Object.getPrototypeOf(LiteralPrimitive.prototype), "constructor", this).call(this);
 
     this.value = value;
@@ -879,6 +913,8 @@ var LiteralPrimitive = exports.LiteralPrimitive = (function (Expression) {
 })(Expression);
 var LiteralString = exports.LiteralString = (function (Expression) {
   function LiteralString(value) {
+    _classCallCheck(this, LiteralString);
+
     _get(Object.getPrototypeOf(LiteralString.prototype), "constructor", this).call(this);
 
     this.value = value;
@@ -914,6 +950,8 @@ var LiteralString = exports.LiteralString = (function (Expression) {
 })(Expression);
 var LiteralArray = exports.LiteralArray = (function (Expression) {
   function LiteralArray(elements) {
+    _classCallCheck(this, LiteralArray);
+
     _get(Object.getPrototypeOf(LiteralArray.prototype), "constructor", this).call(this);
 
     this.elements = elements;
@@ -987,6 +1025,8 @@ var LiteralArray = exports.LiteralArray = (function (Expression) {
 })(Expression);
 var LiteralObject = exports.LiteralObject = (function (Expression) {
   function LiteralObject(keys, values) {
+    _classCallCheck(this, LiteralObject);
+
     _get(Object.getPrototypeOf(LiteralObject.prototype), "constructor", this).call(this);
 
     this.keys = keys;
@@ -1062,6 +1102,8 @@ var LiteralObject = exports.LiteralObject = (function (Expression) {
 })(Expression);
 var Unparser = exports.Unparser = (function () {
   function Unparser(buffer) {
+    _classCallCheck(this, Unparser);
+
     this.buffer = buffer;
   }
 
@@ -1382,4 +1424,6 @@ function setKeyed(obj, key, value) {
 
   return value;
 }
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});

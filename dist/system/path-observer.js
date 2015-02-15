@@ -1,15 +1,19 @@
 System.register([], function (_export) {
   "use strict";
 
-  var _prototypeProperties, PathObserver;
+  var _prototypeProperties, _classCallCheck, PathObserver;
   return {
     setters: [],
     execute: function () {
       _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
       PathObserver = _export("PathObserver", (function () {
         function PathObserver(leftObserver, getRightObserver, value) {
           var _this = this;
+          _classCallCheck(this, PathObserver);
+
           this.leftObserver = leftObserver;
 
           this.disposeLeft = leftObserver.subscribe(function (newValue) {

@@ -1,7 +1,7 @@
 System.register(["./array-change-records"], function (_export) {
   "use strict";
 
-  var calcSplices, projectArraySplices, _prototypeProperties, arrayProto, hasArrayObserve, ModifyArrayObserver, ArrayObserveObserver, ArrayLengthObserver;
+  var calcSplices, projectArraySplices, _prototypeProperties, _classCallCheck, arrayProto, hasArrayObserve, ModifyArrayObserver, ArrayObserveObserver, ArrayLengthObserver;
   _export("getArrayObserver", getArrayObserver);
 
   function getArrayObserver(taskQueue, array) {
@@ -19,6 +19,8 @@ System.register(["./array-change-records"], function (_export) {
     }],
     execute: function () {
       _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
       arrayProto = Array.prototype;
       hasArrayObserve = (function detectArrayObserve() {
@@ -38,9 +40,9 @@ System.register(["./array-change-records"], function (_export) {
         arr.length = 0;
 
         Object.deliverChangeRecords(callback);
-        if (records.length !== 2) return false;
-
-        if (records[0].type != "splice" || records[1].type != "splice") {
+        if (records.length !== 2) {
+          return false;
+        }if (records[0].type != "splice" || records[1].type != "splice") {
           return false;
         }
 
@@ -50,6 +52,8 @@ System.register(["./array-change-records"], function (_export) {
       })();
       ModifyArrayObserver = (function () {
         function ModifyArrayObserver(taskQueue, array) {
+          _classCallCheck(this, ModifyArrayObserver);
+
           this.taskQueue = taskQueue;
           this.callbacks = [];
           this.changeRecords = [];
@@ -232,6 +236,8 @@ System.register(["./array-change-records"], function (_export) {
       })();
       ArrayObserveObserver = (function () {
         function ArrayObserveObserver(array) {
+          _classCallCheck(this, ArrayObserveObserver);
+
           this.array = array;
           this.callbacks = [];
           this.observing = false;
@@ -299,6 +305,8 @@ System.register(["./array-change-records"], function (_export) {
       })();
       ArrayLengthObserver = (function () {
         function ArrayLengthObserver(array) {
+          _classCallCheck(this, ArrayLengthObserver);
+
           this.array = array;
           this.callbacks = [];
           this.currentValue = array.length;

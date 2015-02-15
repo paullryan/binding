@@ -2,8 +2,12 @@
 
 var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
 var Token = exports.Token = (function () {
   function Token(index, text) {
+    _classCallCheck(this, Token);
+
     this.index = index;
     this.text = text;
   }
@@ -45,7 +49,9 @@ var Token = exports.Token = (function () {
   return Token;
 })();
 var Lexer = exports.Lexer = (function () {
-  function Lexer() {}
+  function Lexer() {
+    _classCallCheck(this, Lexer);
+  }
 
   _prototypeProperties(Lexer, null, {
     lex: {
@@ -70,6 +76,8 @@ var Lexer = exports.Lexer = (function () {
 })();
 var Scanner = exports.Scanner = (function () {
   function Scanner(input) {
+    _classCallCheck(this, Scanner);
+
     this.input = input;
     this.length = input.length;
     this.peek = 0;
@@ -447,4 +455,6 @@ function assert(condition, message) {
     throw message || "Assertion failed";
   }
 }
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});

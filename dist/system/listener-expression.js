@@ -1,14 +1,18 @@
 System.register([], function (_export) {
   "use strict";
 
-  var _prototypeProperties, ListenerExpression, Listener;
+  var _prototypeProperties, _classCallCheck, ListenerExpression, Listener;
   return {
     setters: [],
     execute: function () {
       _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
       ListenerExpression = _export("ListenerExpression", (function () {
         function ListenerExpression(eventManager, targetEvent, sourceExpression, delegate, preventDefault) {
+          _classCallCheck(this, ListenerExpression);
+
           this.eventManager = eventManager;
           this.targetEvent = targetEvent;
           this.sourceExpression = sourceExpression;
@@ -31,6 +35,8 @@ System.register([], function (_export) {
       })());
       Listener = (function () {
         function Listener(eventManager, targetEvent, delegate, sourceExpression, target, preventDefault) {
+          _classCallCheck(this, Listener);
+
           this.eventManager = eventManager;
           this.targetEvent = targetEvent;
           this.delegate = delegate;
@@ -57,7 +63,7 @@ System.register([], function (_export) {
                 source.$event = event;
                 var result = _this.sourceExpression.evaluate(source);
                 source.$event = prevEvent;
-                if (_this.preventDefault) {
+                if (result !== true && _this.preventDefault) {
                   event.preventDefault();
                 }
                 return result;

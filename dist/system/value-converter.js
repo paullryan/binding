@@ -1,7 +1,7 @@
 System.register(["aurelia-metadata"], function (_export) {
   "use strict";
 
-  var ResourceType, _prototypeProperties, _inherits, capitalMatcher, ValueConverter;
+  var ResourceType, _prototypeProperties, _inherits, _classCallCheck, capitalMatcher, ValueConverter;
 
 
   function addHyphenAndLower(char) {
@@ -21,9 +21,13 @@ System.register(["aurelia-metadata"], function (_export) {
 
       _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
+      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
       capitalMatcher = /([A-Z])/g;
       ValueConverter = _export("ValueConverter", (function (ResourceType) {
         function ValueConverter(name) {
+          _classCallCheck(this, ValueConverter);
+
           this.name = name;
         }
 

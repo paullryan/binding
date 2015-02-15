@@ -1,14 +1,18 @@
 System.register([], function (_export) {
   "use strict";
 
-  var _prototypeProperties, NameExpression, NameBinder;
+  var _prototypeProperties, _classCallCheck, NameExpression, NameBinder;
   return {
     setters: [],
     execute: function () {
       _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
       NameExpression = _export("NameExpression", (function () {
         function NameExpression(name, mode) {
+          _classCallCheck(this, NameExpression);
+
           this.property = name;
           this.discrete = true;
           this.mode = (mode || "view-model").toLowerCase();
@@ -28,6 +32,8 @@ System.register([], function (_export) {
       })());
       NameBinder = (function () {
         function NameBinder(property, target, mode) {
+          _classCallCheck(this, NameBinder);
+
           this.property = property;
 
           switch (mode) {

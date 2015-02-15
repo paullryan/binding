@@ -1,7 +1,7 @@
 System.register(["./lexer", "./ast"], function (_export) {
   "use strict";
 
-  var Lexer, Token, Expression, ArrayOfExpression, Chain, ValueConverter, Assign, Conditional, AccessScope, AccessMember, AccessKeyed, CallScope, CallFunction, CallMember, PrefixNot, Binary, LiteralPrimitive, LiteralArray, LiteralObject, LiteralString, _prototypeProperties, EOF, Parser, ParserImplementation;
+  var Lexer, Token, Expression, ArrayOfExpression, Chain, ValueConverter, Assign, Conditional, AccessScope, AccessMember, AccessKeyed, CallScope, CallFunction, CallMember, PrefixNot, Binary, LiteralPrimitive, LiteralArray, LiteralObject, LiteralString, _prototypeProperties, _classCallCheck, EOF, Parser, ParserImplementation;
   return {
     setters: [function (_lexer) {
       Lexer = _lexer.Lexer;
@@ -29,9 +29,13 @@ System.register(["./lexer", "./ast"], function (_export) {
     execute: function () {
       _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
       EOF = new Token(-1, null);
       Parser = _export("Parser", (function () {
         function Parser() {
+          _classCallCheck(this, Parser);
+
           this.cache = {};
           this.lexer = new Lexer();
         }
@@ -52,6 +56,8 @@ System.register(["./lexer", "./ast"], function (_export) {
       })());
       ParserImplementation = _export("ParserImplementation", (function () {
         function ParserImplementation(lexer, input) {
+          _classCallCheck(this, ParserImplementation);
+
           this.index = 0;
           this.input = input;
           this.tokens = lexer.lex(input);

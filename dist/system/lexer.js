@@ -1,7 +1,7 @@
 System.register([], function (_export) {
   "use strict";
 
-  var _prototypeProperties, Token, Lexer, Scanner, OPERATORS, $EOF, $TAB, $LF, $VTAB, $FF, $CR, $SPACE, $BANG, $DQ, $$, $PERCENT, $AMPERSAND, $SQ, $LPAREN, $RPAREN, $STAR, $PLUS, $COMMA, $MINUS, $PERIOD, $SLASH, $COLON, $SEMICOLON, $LT, $EQ, $GT, $QUESTION, $0, $9, $A, $E, $Z, $LBRACKET, $BACKSLASH, $RBRACKET, $CARET, $_, $a, $e, $f, $n, $r, $t, $u, $v, $z, $LBRACE, $BAR, $RBRACE, $NBSP;
+  var _prototypeProperties, _classCallCheck, Token, Lexer, Scanner, OPERATORS, $EOF, $TAB, $LF, $VTAB, $FF, $CR, $SPACE, $BANG, $DQ, $$, $PERCENT, $AMPERSAND, $SQ, $LPAREN, $RPAREN, $STAR, $PLUS, $COMMA, $MINUS, $PERIOD, $SLASH, $COLON, $SEMICOLON, $LT, $EQ, $GT, $QUESTION, $0, $9, $A, $E, $Z, $LBRACKET, $BACKSLASH, $RBRACKET, $CARET, $_, $a, $e, $f, $n, $r, $t, $u, $v, $z, $LBRACE, $BAR, $RBRACE, $NBSP;
 
 
   function isWhitespace(code) {
@@ -55,8 +55,12 @@ System.register([], function (_export) {
     execute: function () {
       _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
       Token = _export("Token", (function () {
         function Token(index, text) {
+          _classCallCheck(this, Token);
+
           this.index = index;
           this.text = text;
         }
@@ -98,7 +102,9 @@ System.register([], function (_export) {
         return Token;
       })());
       Lexer = _export("Lexer", (function () {
-        function Lexer() {}
+        function Lexer() {
+          _classCallCheck(this, Lexer);
+        }
 
         _prototypeProperties(Lexer, null, {
           lex: {
@@ -123,6 +129,8 @@ System.register([], function (_export) {
       })());
       Scanner = _export("Scanner", (function () {
         function Scanner(input) {
+          _classCallCheck(this, Scanner);
+
           this.input = input;
           this.length = input.length;
           this.peek = 0;

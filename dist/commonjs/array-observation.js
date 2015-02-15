@@ -2,6 +2,8 @@
 
 var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
 exports.getArrayObserver = getArrayObserver;
 var _arrayChangeRecords = require("./array-change-records");
 
@@ -27,9 +29,9 @@ var arrayProto = Array.prototype,
   arr.length = 0;
 
   Object.deliverChangeRecords(callback);
-  if (records.length !== 2) return false;
-
-  if (records[0].type != "splice" || records[1].type != "splice") {
+  if (records.length !== 2) {
+    return false;
+  }if (records[0].type != "splice" || records[1].type != "splice") {
     return false;
   }
 
@@ -48,6 +50,8 @@ function getArrayObserver(taskQueue, array) {
 
 var ModifyArrayObserver = (function () {
   function ModifyArrayObserver(taskQueue, array) {
+    _classCallCheck(this, ModifyArrayObserver);
+
     this.taskQueue = taskQueue;
     this.callbacks = [];
     this.changeRecords = [];
@@ -231,6 +235,8 @@ var ModifyArrayObserver = (function () {
 
 var ArrayObserveObserver = (function () {
   function ArrayObserveObserver(array) {
+    _classCallCheck(this, ArrayObserveObserver);
+
     this.array = array;
     this.callbacks = [];
     this.observing = false;
@@ -299,6 +305,8 @@ var ArrayObserveObserver = (function () {
 
 var ArrayLengthObserver = (function () {
   function ArrayLengthObserver(array) {
+    _classCallCheck(this, ArrayLengthObserver);
+
     this.array = array;
     this.callbacks = [];
     this.currentValue = array.length;
@@ -350,4 +358,6 @@ var ArrayLengthObserver = (function () {
   return ArrayLengthObserver;
 })();
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
